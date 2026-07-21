@@ -40,9 +40,9 @@ export default function App() {
 
       <header className="header">
         <div className="brand">
-          <img className="brand-mark" src="https://www.personal.com.ar/content/dam/teco-cms-ecosystem/logo/brand.svg" alt="" aria-hidden="true" />
-          <span>Mapa demográfico</span>
-          <span className="brand-sub">Personal · TMA</span>
+          <span className="brand-mark" aria-hidden="true" />
+          <span>Dotación Geo</span>
+          <span className="brand-sub">Personal · TMA · Post-fusión</span>
         </div>
         <div className="header-spacer" />
         <div className="header-date">

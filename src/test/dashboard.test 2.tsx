@@ -49,7 +49,7 @@ import App from '../App';
 describe('dashboard', () => {
   it('renderiza el header, la fecha de última dotación y los KPIs', async () => {
     render(<App />);
-    expect(screen.getByText('Mapa demográfico')).toBeInTheDocument();
+    expect(screen.getByText('Dotación Geo')).toBeInTheDocument();
     expect(screen.getByText('21 de julio de 2026')).toBeInTheDocument();
     expect(screen.getByText('Dotación visible')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /importar snapshot/i })).toBeInTheDocument();

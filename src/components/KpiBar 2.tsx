@@ -18,7 +18,10 @@ export default function KpiBar({
 }: Props) {
   const porEmpresa = useMemo(() => countBy(rows, (e) => e._empresa), [rows]);
   const porPais = useMemo(() => countBy(rows, paisNombre), [rows]);
+  const porGenero = useMemo(() => countBy(rows, (e) => e['Género']), [rows]);
+
   const total = rows.length;
+  const mujeres = porGenero.get('Mujer') ?? 0;
   const delta = comparison ? total - prevTotal : null;
 
   const toggleEmpresa = (emp: string) =>
@@ -27,6 +30,14 @@ export default function KpiBar({
       empresas: f.empresas.includes(emp as never)
         ? f.empresas.filter((x) => x !== emp)
         : ([...f.empresas, emp] as never),
+    }));
+
+  const toggleGeneroMujer = () =>
+    setFilters((f) => ({
+      ...f,
+      generos: f.generos.includes('Mujer')
+        ? f.generos.filter((g) => g !== 'Mujer')
+        : [...f.generos, 'Mujer'],
     }));
 
   return (
@@ -66,6 +77,17 @@ export default function KpiBar({
           {[...porPais.keys()].sort().join(' · ') || 'Sin datos'}
         </span>
       </div>
+
+      <button
+        className="kpi"
+        aria-pressed={filters.generos.includes('Mujer')}
+        onClick={toggleGeneroMujer}
+        title="Filtrar el mapa por género Mujer"
+      >
+        <span className="kpi-label">Participación femenina</span>
+        <span className="kpi-value">{pct(mujeres, total)}</span>
+        <span className="kpi-sub">{fmtNum(mujeres)} personas</span>
+      </button>
 
       {comparison && delta !== null && (
         <div className="kpi" data-static="true">

@@ -38,12 +38,12 @@ const STYLE: maplibregl.StyleSpecification = {
     },
   },
   layers: [
-    { id: 'bg', type: 'background', paint: { 'background-color': '#e8eef6' } },
+    { id: 'bg', type: 'background', paint: { 'background-color': '#0d1117' } },
     {
       id: 'osm',
       type: 'raster',
       source: 'osm',
-      paint: { 'raster-opacity': 0.9, 'raster-saturation': -0.15, 'raster-brightness-min': 0.05, 'raster-brightness-max': 0.96 },
+      paint: { 'raster-opacity': 0.42, 'raster-saturation': -0.85, 'raster-brightness-max': 0.72 },
     },
   ],
 };
@@ -112,6 +112,8 @@ export default function MapView({ rows, loading, layers, onLayersChange }: Props
 
   const geojson = useMemo(() => toFeatureCollection(rows), [rows]);
   const sinGeo = rows.length - geojson.features.length;
+  // TEMP debug — borrar después del diagnóstico
+  console.log('[MapView] rows.length:', rows.length, '| geojson.features.length:', geojson.features.length);
 
   // ---------- init ----------
   useEffect(() => {
@@ -161,14 +163,14 @@ export default function MapView({ rows, loading, layers, onLayersChange }: Props
         type: 'line',
         source: SRC_ADMIN1,
         layout: { visibility: 'none' },
-        paint: { 'line-color': '#7a96b0', 'line-width': 0.8, 'line-opacity': 0.8 },
+        paint: { 'line-color': '#3d5470', 'line-width': 0.7, 'line-opacity': 0.75 },
       });
       m.addLayer({
         id: 'admin0-line',
         type: 'line',
         source: SRC_ADMIN0,
         layout: { visibility: 'none' },
-        paint: { 'line-color': '#2e5878', 'line-width': 1.4 },
+        paint: { 'line-color': '#6a8cb0', 'line-width': 1.2 },
       });
 
       m.addLayer({
@@ -183,11 +185,11 @@ export default function MapView({ rows, loading, layers, onLayersChange }: Props
           'heatmap-color': [
             'interpolate', ['linear'], ['heatmap-density'],
             0, 'rgba(0,0,0,0)',
-            0.2, 'rgba(0,80,160,0.35)',
-            0.4, 'rgba(0,110,200,0.55)',
-            0.6, 'rgba(0,140,220,0.72)',
-            0.8, 'rgba(0,90,190,0.85)',
-            1, 'rgba(10,40,120,0.92)',
+            0.2, '#123a5e',
+            0.4, '#0f6fa8',
+            0.6, '#00a9e0',
+            0.8, '#7fd8ff',
+            1, '#ffffff',
           ],
           'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 14, 12, 34],
           'heatmap-opacity': 0.75,
@@ -327,7 +329,7 @@ export default function MapView({ rows, loading, layers, onLayersChange }: Props
       <div className="map-canvas" ref={container} />
 
       <fieldset className="map-overlay map-layers">
-        <div className="overlay-title">Capas</div>
+        <legend className="overlay-title">Capas</legend>
         {(
           [
             ['clusters', 'Clusters'],
