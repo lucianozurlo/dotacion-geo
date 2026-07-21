@@ -112,6 +112,8 @@ export default function MapView({ rows, loading, layers, onLayersChange }: Props
 
   const geojson = useMemo(() => toFeatureCollection(rows), [rows]);
   const sinGeo = rows.length - geojson.features.length;
+  // TEMP debug — borrar después del diagnóstico
+  console.log('[MapView] rows.length:', rows.length, '| geojson.features.length:', geojson.features.length);
 
   // ---------- init ----------
   useEffect(() => {
